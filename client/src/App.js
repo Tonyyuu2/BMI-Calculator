@@ -3,7 +3,8 @@ import './App.css';
 
 function App() {
   return (
-    <div className="App">
+    <div className="bg-green-300 w-screen h-screen flex justify-center items-center">
+      
     </div>
   );
 }
