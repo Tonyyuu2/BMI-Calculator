@@ -1,10 +1,22 @@
 import React, { useState } from "react";
 import FormControl from "@mui/material/FormControl";
-import { FormHelperText, Input, InputLabel, TextField } from "@mui/material";
+import {
+  FormHelperText,
+  Input,
+  InputAdornment,
+  InputLabel,
+  TextField,
+} from "@mui/material";
 
 function Form() {
+  const [unit, setUnit] = useState({
+    usUnits: true,
+    metricUnits: false,
+  });
+
   const [data, setData] = useState({
     age: "",
+    height: "",
   });
 
   return (
@@ -33,21 +45,24 @@ function Form() {
             }
           />
           <TextField
-            label="height in cm"
+            label="height"
             type="number"
             variant="outlined"
-            value={data.age}
+            value={data.height}
+            InputProps={{
+              endAdornment: <InputAdornment position="end">cm</InputAdornment>,
+            }}
             onChange={(e) =>
               setData((prev) => {
-                return { ...prev, age: e.target.value };
+                return { ...prev, height: e.target.value };
               })
             }
             helperText={
-              data.age === ""
-                ? "I won't judge"
-                : data.age < 21
-                ? "YOU'RE TOO YOUNG"
-                : data.age > 21
+              data.height === ""
+                ? "Tall or short, you still a king/queen"
+                : data.height < 157
+                ? "Good luck finding love..."
+                : data.height > 21
                 ? "WOAH WOAH WOAH OLD TIMER"
                 : "let's go"
             }
