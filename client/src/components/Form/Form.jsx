@@ -41,7 +41,8 @@ function Form() {
     }
 
     if (unit === "Metric Units") {
-      
+      const convertedKg = Number(data.kg);
+      const convertedCm = Number(data.cm);
     }
   }
 
