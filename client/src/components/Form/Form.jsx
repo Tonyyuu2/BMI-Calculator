@@ -43,6 +43,8 @@ function Form() {
     if (unit === "Metric Units") {
       const convertedKg = Number(data.kg);
       const convertedCm = Number(data.cm);
+      const bmi = (convertedKg / convertedCm / convertedCm) * 10000
+      return bmi
     }
   }
 
