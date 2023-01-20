@@ -39,6 +39,17 @@ function Form() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    if (data.male === false && data.female === false) {
+      setError((prev) => {
+        return { ...prev, genderError: true };
+      });
+      // return;
+    } else {
+      setError((prev) => {
+        return { ...prev, genderError: false };
+      });
+    }
+
     if (data.age === "") {
       setError((prev) => {
         return { ...prev, ageError: true };
