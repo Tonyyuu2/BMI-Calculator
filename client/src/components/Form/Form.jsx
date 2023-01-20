@@ -15,8 +15,6 @@ import {
 
 function Form() {
   const [unit, setUnit] = useState("US Units");
-  console.log("unit :", unit);
-
   const [data, setData] = useState({
     age: "",
     cm: "",
@@ -27,11 +25,24 @@ function Form() {
     male: false,
     female: false,
   });
+  const [error, setError] = useState({
+    ageError: false,
+    cmError: false,
+    footError: false,
+    inchError: false,
+    kgError: false,
+    genderError: false
+  });
 
   console.log("data :", data);
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    if (data.age === '') {
+      
+    }
+
 
     if (unit === 'US Units') {
       const feetToInches = (Number(data.foot)) * 12
@@ -46,6 +57,8 @@ function Form() {
       const bmi = (convertedKg / convertedCm / convertedCm) * 10000
       return bmi
     }
+
+
   }
 
   const inchNumberChecker = (value) => {
