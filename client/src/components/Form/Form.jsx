@@ -31,9 +31,10 @@ function Form() {
     footError: false,
     inchError: false,
     kgError: false,
-    genderError: false
+    lbsError: false,
+    genderError: false,
   });
-  console.log('error :', error);
+  console.log("error :", error);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -49,7 +50,7 @@ function Form() {
       });
     }
 
-    if (unit === 'US Units' && data.foot === '') {
+    if (unit === "US Units" && data.foot === "") {
       setError((prev) => {
         return { ...prev, footError: true };
       });
@@ -59,29 +60,43 @@ function Form() {
         return { ...prev, footError: false };
       });
     }
-    
-    if (unit === 'US Units' && data.inch === '') {
-      
+
+    if (unit === "US Units" && data.inch === "") {
+      setError((prev) => {
+        return { ...prev, inchError: true };
+      });
+      // return;
+    } else {
+      setError((prev) => {
+        return { ...prev, inchError: false };
+      });
     }
 
+    if (unit === "US Units" && data.lbs === "") {
+      setError((prev) => {
+        return { ...prev, lbsError: true };
+      });
+      // return;
+    } else {
+      setError((prev) => {
+        return { ...prev, lbsError: false };
+      });
+    }
 
-
-    if (unit === 'US Units') {
-      const feetToInches = (Number(data.foot)) * 12
+    if (unit === "US Units") {
+      const feetToInches = Number(data.foot) * 12;
       const newInch = feetToInches + Number(data.inch);
-      const bmi = (Number(data.lbs) / newInch / newInch) *703
-      return bmi
+      const bmi = (Number(data.lbs) / newInch / newInch) * 703;
+      return bmi;
     }
 
     if (unit === "Metric Units") {
       const convertedKg = Number(data.kg);
       const convertedCm = Number(data.cm);
-      const bmi = (convertedKg / convertedCm / convertedCm) * 10000
-      return bmi
+      const bmi = (convertedKg / convertedCm / convertedCm) * 10000;
+      return bmi;
     }
-
-
-  }
+  };
 
   const inchNumberChecker = (value) => {
     const regex = /[-+.,]/gm;
@@ -160,7 +175,6 @@ function Form() {
       return value;
     }
   };
-
 
   return (
     <div>
@@ -422,7 +436,12 @@ function Form() {
               }
             />
           )}
-          <Button variant="contained" color="success" size="large" onClick={(e) => handleSubmit(e)}>
+          <Button
+            variant="contained"
+            color="success"
+            size="large"
+            onClick={(e) => handleSubmit(e)}
+          >
             Calculate
           </Button>
         </FormControl>
