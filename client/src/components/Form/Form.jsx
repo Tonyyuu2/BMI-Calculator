@@ -12,6 +12,7 @@ import {
   RadioGroup,
   TextField,
 } from "@mui/material";
+import ErrorHandling from "../ErrorHandling/ErrorHandling";
 
 function Form() {
   const [unit, setUnit] = useState("US Units");
@@ -112,7 +113,7 @@ function Form() {
       // return;
     } else {
       setError((prev) => {
-        return { ...prev,  kgError: false };
+        return { ...prev, kgError: false };
       });
     }
 
@@ -258,6 +259,7 @@ function Form() {
               }
             />
           </RadioGroup>
+          {error.genderError && <ErrorHandling gender={true} />}
           <TextField
             sx={{
               width: 230,
