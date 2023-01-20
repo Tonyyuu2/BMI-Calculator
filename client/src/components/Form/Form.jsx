@@ -65,6 +65,13 @@ function Form() {
     }
   };
 
+  const ageNumberChecker = (value) => {
+    const regex = /[-+.,]/gm;
+    if (value.search(regex) >= 0) {
+      return "2";
+    }
+  }
+
   return (
     <div>
       <div className="flex justify-center mb-2">
@@ -95,6 +102,12 @@ function Form() {
             type="number"
             variant="outlined"
             value={data.age}
+            InputProps={{
+              inputProps: {
+                min: 2,
+                max: 80,
+              },
+            }}
             onChange={(e) =>
               setData((prev) => {
                 return { ...prev, age: e.target.value };
