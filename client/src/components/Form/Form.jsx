@@ -23,28 +23,22 @@ function Form() {
     foot: "",
     inch: "",
   });
-  console.log('inch---- :', data.inch);
-  console.log("data--- :", typeof data.foot + data.inch);
 
-  const numberChecker = (value) => {
-    //convert into number
-    //if that number > 11
-    //return 11
-    
+
+  const inchNumberChecker = (value) => {
     const regex = /[-+.,]/gm
-    
     if (value.search(regex) >= 0) {
       return '0'
     }
-
     const valueNumber = Number(value);
-
     if (valueNumber > 11) {
       return (11).toString();
     } else {
       return value;
     }
   };
+
+  
 
   return (
     <div>
@@ -128,7 +122,7 @@ function Form() {
               <div className="flex gap-3">
                 <TextField
                   sx={{
-                    width: 100,
+                    width: 110,
                   }}
                   type="number"
                   variant="outlined"
@@ -137,6 +131,10 @@ function Form() {
                     endAdornment: (
                       <InputAdornment position="end">ft</InputAdornment>
                     ),
+                    inputProps: {
+                      min: 4, 
+                      max: 7
+                    }
                   }}
                   onChange={(e) =>
                     setData((prev) => {
@@ -146,7 +144,7 @@ function Form() {
                 />
                 <TextField
                   sx={{
-                    width: 100,
+                    width: 110,
                   }}
                   type="number"
                   variant="outlined"
@@ -163,7 +161,7 @@ function Form() {
                   
                   onChange={(e) =>
                     setData((prev) => {
-                      return { ...prev, inch: numberChecker(e.target.value) };
+                      return { ...prev, inch: inchNumberChecker(e.target.value) };
                     })
                   }
                 />
