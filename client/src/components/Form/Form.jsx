@@ -70,7 +70,13 @@ function Form() {
     if (value.search(regex) >= 0) {
       return "2";
     }
-  }
+    const valueNumber = Number(value);
+    if (valueNumber > 80) {
+      return (80).toString();
+    } else {
+      return value;
+    }
+  };
 
   return (
     <div>
@@ -110,7 +116,7 @@ function Form() {
             }}
             onChange={(e) =>
               setData((prev) => {
-                return { ...prev, age: e.target.value };
+                return { ...prev, age: ageNumberChecker(e.target.value) };
               })
             }
             required
