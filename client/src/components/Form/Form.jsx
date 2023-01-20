@@ -83,6 +83,28 @@ function Form() {
       });
     }
 
+    if (unit === "Metric Units" && data.cm === "") {
+      setError((prev) => {
+        return { ...prev, cmError: true };
+      });
+      // return;
+    } else {
+      setError((prev) => {
+        return { ...prev, cmError: false };
+      });
+    }
+
+    if (unit === "Metric Units" && data.kg === "") {
+      setError((prev) => {
+        return { ...prev, kgError: true };
+      });
+      // return;
+    } else {
+      setError((prev) => {
+        return { ...prev,  kgError: false };
+      });
+    }
+
     if (unit === "US Units") {
       const feetToInches = Number(data.foot) * 12;
       const newInch = feetToInches + Number(data.inch);
