@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import FormControl from "@mui/material/FormControl";
 import {
+  Button,
   FormControlLabel,
   FormHelperText,
   FormLabel,
@@ -11,7 +12,6 @@ import {
   RadioGroup,
   TextField,
 } from "@mui/material";
-import { Box } from "@mui/system";
 
 function Form() {
   const [unit, setUnit] = useState("US Units");
@@ -22,9 +22,28 @@ function Form() {
     cm: "",
     foot: "",
     inch: "",
+    lbs: "",
+    kg: "",
+    male: false,
+    female: false,
   });
 
   console.log("data :", data);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    if (unit === 'US Units') {
+      const feetToInches = (Number(data.foot)) * 12
+      const newInch = feetToInches + Number(data.inch);
+      const bmi = (Number(data.lbs) / newInch / newInch) *703
+      return bmi
+    }
+
+    if (unit === "Metric Units") {
+      
+    }
+  }
 
   const inchNumberChecker = (value) => {
     const regex = /[-+.,]/gm;
@@ -55,7 +74,7 @@ function Form() {
   const cmNumberChecker = (value) => {
     const regex = /[-+.,]/gm;
     if (value.search(regex) >= 0) {
-      return "122";
+      return "87";
     }
     const valueNumber = Number(value);
     if (valueNumber > 242) {
@@ -78,9 +97,36 @@ function Form() {
     }
   };
 
+  const lbsNumberChecker = (value) => {
+    const regex = /[-+.,]/gm;
+    if (value.search(regex) >= 0) {
+      return "26";
+    }
+    const valueNumber = Number(value);
+    if (valueNumber > 600) {
+      return (600).toString();
+    } else {
+      return value;
+    }
+  };
+
+  const kgNumberChecker = (value) => {
+    const regex = /[-+.,]/gm;
+    if (value.search(regex) >= 0) {
+      return "12";
+    }
+    const valueNumber = Number(value);
+    if (valueNumber > 272) {
+      return (272).toString();
+    } else {
+      return value;
+    }
+  };
+
+
   return (
     <div>
-      <div className="flex justify-center mb-2">
+      <div className="flex justify-center mb-2 items-center">
         <FormControl>
           <RadioGroup row defaultValue="US Units">
             <FormControlLabel
@@ -102,8 +148,35 @@ function Form() {
       </div>
       <div className="bg-white w-auto h-auto p-6 flex rounded-xl flex-col ">
         <h1 className="mb-3 flex justify-center">Add values below 😊</h1>
-        <FormControl className="gap-5">
+        <FormControl className="gap-5 flex justify-center items-center">
+          <RadioGroup row>
+            <FormControlLabel
+              value="Male"
+              control={<Radio />}
+              label="Male"
+              labelPlacement="top"
+              onChange={() =>
+                setData((prev) => {
+                  return { ...prev, male: true, female: false };
+                })
+              }
+            />
+            <FormControlLabel
+              value="Female"
+              control={<Radio />}
+              label="Female"
+              labelPlacement="top"
+              onChange={() =>
+                setData((prev) => {
+                  return { ...prev, male: false, female: true };
+                })
+              }
+            />
+          </RadioGroup>
           <TextField
+            sx={{
+              width: 230,
+            }}
             label="Age"
             type="number"
             variant="outlined"
@@ -133,6 +206,9 @@ function Form() {
           />
           {unit === "Metric Units" && (
             <TextField
+              sx={{
+                width: 230,
+              }}
               label="height"
               type="number"
               variant="outlined"
@@ -142,7 +218,7 @@ function Form() {
                   <InputAdornment position="end">cm</InputAdornment>
                 ),
                 inputProps: {
-                  min: 122,
+                  min: 87,
                   max: 242,
                 },
               }}
@@ -152,13 +228,13 @@ function Form() {
                 })
               }
               helperText={
-                data.height === ""
+                data.cm === ""
                   ? "Tall or short, you still a king/queen"
-                  : data.height < 157
+                  : data.cm < 157
                   ? "Good luck finding love..."
-                  : data.height >= 188
+                  : data.cm >= 188
                   ? "How's the weather up there?😳"
-                  : data.height >= 157
+                  : data.cm >= 157
                   ? "Pssh... I can take you 🤺"
                   : null
               }
@@ -180,7 +256,7 @@ function Form() {
                       <InputAdornment position="end">ft</InputAdornment>
                     ),
                     inputProps: {
-                      min: 4,
+                      min: 2,
                       max: 7,
                     },
                   }}
@@ -232,6 +308,85 @@ function Form() {
               </FormHelperText>
             </div>
           )}
+          {unit === "US Units" && (
+            <TextField
+              sx={{
+                width: 230,
+              }}
+              label="Weight"
+              type="number"
+              variant="outlined"
+              value={data.lbs}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">lbs</InputAdornment>
+                ),
+                inputProps: {
+                  min: 26,
+                  max: 600,
+                },
+              }}
+              onChange={(e) =>
+                setData((prev) => {
+                  return { ...prev, lbs: lbsNumberChecker(e.target.value) };
+                })
+              }
+              helperText={
+                data.lbs === ""
+                  ? "Don't be shy"
+                  : data.lbs <= 26
+                  ? "You can't possibly weigh less than a 2 year old.."
+                  : data.lbs <= 157
+                  ? "Congrats, you weigh as much as the average highschooler."
+                  : data.lbs >= 300
+                  ? "Okay okay CHIIIILL"
+                  : data.lbs >= 157
+                  ? "I can squat you. For reps..."
+                  : null
+              }
+            />
+          )}
+          {unit === "Metric Units" && (
+            <TextField
+              sx={{
+                width: 230,
+              }}
+              label="Weight"
+              type="number"
+              variant="outlined"
+              value={data.kg}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">kg</InputAdornment>
+                ),
+                inputProps: {
+                  min: 12,
+                  max: 272,
+                },
+              }}
+              onChange={(e) =>
+                setData((prev) => {
+                  return { ...prev, kg: kgNumberChecker(e.target.value) };
+                })
+              }
+              helperText={
+                data.kg === ""
+                  ? "Don't be shy"
+                  : data.kg <= 12
+                  ? "You can't possibly weigh less than a 2 year old.."
+                  : data.kg <= 72
+                  ? `Congrats, you weigh as much as the average highschooler.`
+                  : data.kg >= 272
+                  ? "Okay okay CHIIIILL"
+                  : data.kg >= 72
+                  ? "I can squat you. For reps..."
+                  : null
+              }
+            />
+          )}
+          <Button variant="contained" color="success" size="large" onClick={(e) => handleSubmit(e)}>
+            Calculate
+          </Button>
         </FormControl>
       </div>
     </div>
