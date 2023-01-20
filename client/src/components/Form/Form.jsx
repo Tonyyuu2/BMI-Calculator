@@ -19,16 +19,17 @@ function Form() {
 
   const [data, setData] = useState({
     age: "",
-    height: "",
+    cm: "",
     foot: "",
     inch: "",
   });
 
+  console.log("data :", data);
 
   const inchNumberChecker = (value) => {
-    const regex = /[-+.,]/gm
+    const regex = /[-+.,]/gm;
     if (value.search(regex) >= 0) {
-      return '0'
+      return "0";
     }
     const valueNumber = Number(value);
     if (valueNumber > 11) {
@@ -38,7 +39,31 @@ function Form() {
     }
   };
 
-  
+  const feetNumberChecker = (value) => {
+    const regex = /[-+.,]/gm;
+    if (value.search(regex) >= 0) {
+      return "4";
+    }
+    const valueNumber = Number(value);
+    if (valueNumber > 7) {
+      return (7).toString();
+    } else {
+      return value;
+    }
+  };
+
+  const cmNumberChecker = (value) => {
+    const regex = /[-+.,]/gm;
+    if (value.search(regex) >= 0) {
+      return "122";
+    }
+    const valueNumber = Number(value);
+    if (valueNumber > 242) {
+      return (242).toString();
+    } else {
+      return value;
+    }
+  };
 
   return (
     <div>
@@ -92,15 +117,19 @@ function Form() {
               label="height"
               type="number"
               variant="outlined"
-              value={data.height}
+              value={data.cm}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">cm</InputAdornment>
                 ),
+                inputProps: {
+                  min: 122,
+                  max: 242,
+                },
               }}
               onChange={(e) =>
                 setData((prev) => {
-                  return { ...prev, height: e.target.value };
+                  return { ...prev, cm: cmNumberChecker(e.target.value) };
                 })
               }
               helperText={
@@ -132,13 +161,16 @@ function Form() {
                       <InputAdornment position="end">ft</InputAdornment>
                     ),
                     inputProps: {
-                      min: 4, 
-                      max: 7
-                    }
+                      min: 4,
+                      max: 7,
+                    },
                   }}
                   onChange={(e) =>
                     setData((prev) => {
-                      return { ...prev, foot: e.target.value };
+                      return {
+                        ...prev,
+                        foot: feetNumberChecker(e.target.value),
+                      };
                     })
                   }
                 />
@@ -154,14 +186,16 @@ function Form() {
                       <InputAdornment position="end">in</InputAdornment>
                     ),
                     inputProps: {
-                      min: 0, 
-                      max: 11
-                    }
+                      min: 0,
+                      max: 11,
+                    },
                   }}
-                  
                   onChange={(e) =>
                     setData((prev) => {
-                      return { ...prev, inch: inchNumberChecker(e.target.value) };
+                      return {
+                        ...prev,
+                        inch: inchNumberChecker(e.target.value),
+                      };
                     })
                   }
                 />
@@ -173,7 +207,7 @@ function Form() {
                   ? "Good luck finding love..."
                   : data.foot + data.inch >= 62
                   ? "How's the weather up there?😳"
-                  : (data.foot + data.inch) >= 52
+                  : data.foot + data.inch >= 52
                   ? "Pssh... I can take you 🤺"
                   : null}
               </FormHelperText>
