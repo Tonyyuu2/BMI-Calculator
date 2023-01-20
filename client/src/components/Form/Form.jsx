@@ -23,7 +23,28 @@ function Form() {
     foot: "",
     inch: "",
   });
-  console.log("data--- :", data.foot + data.inch);
+  console.log('inch---- :', data.inch);
+  console.log("data--- :", typeof data.foot + data.inch);
+
+  const numberChecker = (value) => {
+    //convert into number
+    //if that number > 11
+    //return 11
+    
+    const regex = /[-+.,]/gm
+    
+    if (value.search(regex) >= 0) {
+      return '0'
+    }
+
+    const valueNumber = Number(value);
+
+    if (valueNumber > 11) {
+      return (11).toString();
+    } else {
+      return value;
+    }
+  };
 
   return (
     <div>
@@ -134,10 +155,15 @@ function Form() {
                     endAdornment: (
                       <InputAdornment position="end">in</InputAdornment>
                     ),
+                    inputProps: {
+                      min: 0, 
+                      max: 11
+                    }
                   }}
+                  
                   onChange={(e) =>
                     setData((prev) => {
-                      return { ...prev, inch: e.target.value };
+                      return { ...prev, inch: numberChecker(e.target.value) };
                     })
                   }
                 />
@@ -147,9 +173,9 @@ function Form() {
                   ? "Tall or short, you still a king/queen"
                   : data.foot + data.inch < 52
                   ? "Good luck finding love..."
-                  : data.height + data.inch >= 62
+                  : data.foot + data.inch >= 62
                   ? "How's the weather up there?😳"
-                  : data.height + data.inch >= 52
+                  : (data.foot + data.inch) >= 52
                   ? "Pssh... I can take you 🤺"
                   : null}
               </FormHelperText>
