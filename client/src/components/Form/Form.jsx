@@ -33,15 +33,37 @@ function Form() {
     kgError: false,
     genderError: false
   });
-
-  console.log("data :", data);
+  console.log('error :', error);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (data.age === '') {
+    if (data.age === "") {
+      setError((prev) => {
+        return { ...prev, ageError: true };
+      });
+      // return;
+    } else {
+      setError((prev) => {
+        return { ...prev, ageError: false };
+      });
+    }
+
+    if (unit === 'US Units' && data.foot === '') {
+      setError((prev) => {
+        return { ...prev, footError: true };
+      });
+      // return;
+    } else {
+      setError((prev) => {
+        return { ...prev, footError: false };
+      });
+    }
+    
+    if (unit === 'US Units' && data.inch === '') {
       
     }
+
 
 
     if (unit === 'US Units') {
