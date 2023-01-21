@@ -511,14 +511,33 @@ function Form() {
             color="success"
             size="large"
             onClick={(e) => {
-              handleSubmit(e)
+              handleSubmit(e);
 
-              if (unit === "US Units" && data.age && data.foot && data.inch && data.lbs && (data.female || data.male)) {
+              if (
+                unit === "US Units" &&
+                data.age &&
+                data.foot &&
+                data.inch &&
+                data.lbs &&
+                (data.female || data.male)
+              ) {
                 setData((prev) => {
-                  return {...prev, calculate: true}
-                })
+                  return { ...prev, calculate: true };
+                });
               }
-            }}              
+
+              if (
+                unit === "Metric Units" &&
+                data.age &&
+                data.cm &&
+                data.kg &&
+                (data.female || data.male)
+              ) {
+                setData((prev) => {
+                  return { ...prev, calculate: true };
+                });
+              }
+            }}
           >
             {/* (e) => {
               handleSubmit(e)
@@ -533,7 +552,11 @@ function Form() {
       </div>
       {/* results */}
       <div>
-        {data.calculate && <h1>{`You are ${data.male ? 'Male' : data.female ? 'Female' : ''}`}</h1>}
+        {data.calculate && (
+          <h1>{`You are ${
+            data.male ? "Male" : data.female ? "Female" : ""
+          }`}</h1>
+        )}
       </div>
     </div>
   );
