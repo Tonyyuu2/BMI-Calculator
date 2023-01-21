@@ -291,6 +291,7 @@ function Form() {
                 : "let's go"
             }
           />
+          {error.ageError && <ErrorHandling age={true} />}
           {unit === "Metric Units" && (
             <TextField
               sx={{
@@ -326,7 +327,8 @@ function Form() {
                   : null
               }
             />
-          )}
+            )}
+            {error.cmError && <ErrorHandling cm={true}/>}
           {unit === "US Units" && (
             <div className="flex flex-col ">
               <p className="text-sm mb-1">Height</p>
