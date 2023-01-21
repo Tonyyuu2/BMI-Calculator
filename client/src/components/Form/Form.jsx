@@ -25,7 +25,11 @@ function Form() {
     kg: "",
     male: false,
     female: false,
+    usBmi: 0,
+    metricBmi: 0,
+    calculate: false,
   });
+  console.log("data :", data);
   const [error, setError] = useState({
     ageError: false,
     cmError: false,
@@ -35,7 +39,6 @@ function Form() {
     lbsError: false,
     genderError: false,
   });
-  console.log("error :", error);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -121,14 +124,18 @@ function Form() {
       const feetToInches = Number(data.foot) * 12;
       const newInch = feetToInches + Number(data.inch);
       const bmi = (Number(data.lbs) / newInch / newInch) * 703;
-      return bmi;
+      setData((prev) => {
+        return { ...prev, usBmi: bmi };
+      });
     }
 
     if (unit === "Metric Units") {
       const convertedKg = Number(data.kg);
       const convertedCm = Number(data.cm);
       const bmi = (convertedKg / convertedCm / convertedCm) * 10000;
-      return bmi;
+      setData((prev) => {
+        return { ...prev, metricBmi: bmi };
+      });
     }
   };
 
@@ -221,6 +228,17 @@ function Form() {
               label="US Units"
               labelPlacement="top"
               onChange={(e) => setUnit(e.target.value)}
+              onClick={() =>
+                setError({
+                  ageError: false,
+                  cmError: false,
+                  footError: false,
+                  inchError: false,
+                  kgError: false,
+                  lbsError: false,
+                  genderError: false,
+                })
+              }
             />
             <FormControlLabel
               value="Metric Units"
@@ -228,13 +246,24 @@ function Form() {
               label="Metric Units"
               labelPlacement="top"
               onChange={(e) => setUnit(e.target.value)}
+              onClick={() =>
+                setError({
+                  ageError: false,
+                  cmError: false,
+                  footError: false,
+                  inchError: false,
+                  kgError: false,
+                  lbsError: false,
+                  genderError: false,
+                })
+              }
             />
           </RadioGroup>
         </FormControl>
       </div>
       <div className="bg-white w-auto h-auto p-6 flex rounded-xl flex-col ">
         <h1 className="mb-3 flex justify-center">Add values below 😊</h1>
-        <FormControl className="gap-5 flex justify-center items-center">
+        <FormControl className="gap-2 flex justify-center items-center">
           <RadioGroup row>
             <FormControlLabel
               value="Male"
@@ -327,8 +356,8 @@ function Form() {
                   : null
               }
             />
-            )}
-            {error.cmError && <ErrorHandling cm={true}/>}
+          )}
+          {error.cmError && <ErrorHandling cm={true} />}
           {unit === "US Units" && (
             <div className="flex flex-col ">
               <p className="text-sm mb-1">Height</p>
@@ -397,6 +426,8 @@ function Form() {
               </FormHelperText>
             </div>
           )}
+          {error.footError && <ErrorHandling foot={true} />}
+          {error.inchError && <ErrorHandling inch={true} />}
           {unit === "US Units" && (
             <TextField
               sx={{
@@ -435,6 +466,7 @@ function Form() {
               }
             />
           )}
+          {error.lbsError && <ErrorHandling lbs={true} />}
           {unit === "Metric Units" && (
             <TextField
               sx={{
@@ -473,15 +505,27 @@ function Form() {
               }
             />
           )}
+          {error.kgError && <ErrorHandling kg={true} />}
           <Button
             variant="contained"
             color="success"
             size="large"
-            onClick={(e) => handleSubmit(e)}
+            onClick={}
           >
+            {/* (e) => {
+              handleSubmit(e)
+              setData((prev) => {
+                return {...prev, calculate: true}
+              })
+            }
+           */}
             Calculate
           </Button>
         </FormControl>
+      </div>
+      {/* results */}
+      <div>
+        {data.calculate && <h1>{`${data.male ? 'You are' : data.female ? 'You are' : ''} ${data.male ? 'Male' : data.female ? 'Female' : ''}`}</h1>}
       </div>
     </div>
   );

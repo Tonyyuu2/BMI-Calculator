@@ -10,7 +10,7 @@ function ErrorHandling({ age, cm, foot, inch, lbs, kg, gender }) {
         : foot
         ? "❌ It's okay... It's not feet pics! ❌"
         : inch
-        ? "❌ Size... Does matter...❌ "
+        ? "❌ 0 inches?! oof.❌ "
         : lbs
         ? "❌ It's fine... It's bulking season right? ❌"
         : kg
