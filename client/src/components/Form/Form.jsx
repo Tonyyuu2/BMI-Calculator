@@ -221,7 +221,7 @@ function Form() {
 
   return (
     <div>
-      <div className="flex justify-center mb-2 items-center">
+      <div className="flex justify-center mb-2 items-center mt-5">
         <FormControl>
           <RadioGroup row defaultValue="US Units">
             <FormControlLabel
@@ -585,24 +585,47 @@ function Form() {
         </FormControl>
       </div>
       {/* results */}
-      <div className="flex ">
+      <div className="flex flex-col w-[20rem] justify-center items-center mt-4">
         {data.calculate && (
           <>
-            <h1>{`You are ${
-              data.male ? "Male." : data.female ? "Female." : ""
-            }`}</h1>
-            <p>{`You're BMI is ${
-              unit === "US Units"
-                ? data.usBmi
-                : unit === "Metric Units"
-                ? data.metricBmi
-                : ""
-            }  `}</p>
+            <i className="text-lg ">
+              {`As a ${
+                data.male
+                  ? "biological man..."
+                  : data.female
+                  ? "biological woman..."
+                  : ""
+              }`}
+            </i>
+            <div className="flex items-center">
+              <i className="">You have a BMI of:&nbsp;</i>
+              <p className="text-2xl font-bold underline">{`${
+                unit === "US Units"
+                  ? `${Math.ceil(data.usBmi)}`
+                  : unit === "Metric Units"
+                  ? `${Math.ceil(data.metricBmi)}`
+                  : ""
+              }`}</p>
+            </div>
+            <br />
+
+            <p className="text-center">
+              {data.usBmi < 18.5
+                ? "Good news! You are underweight! You have a lot of room to grow so get eatin'!"
+                : data.usBmi < 25
+                ? "Awesome! You're within healthy weight. Keep it up!"
+                : data.usBmi < 29
+                ? "Unfortunately, you are considered overweight. Time to hit the gym!"
+                : data.usBmi > 30
+                ? "This isn't easy, but you're considered obese. Time to rethink the lifestyle."
+                : ""}
+            </p>
           </>
         )}
       </div>
     </div>
   );
 }
+
 
 export default Form;
