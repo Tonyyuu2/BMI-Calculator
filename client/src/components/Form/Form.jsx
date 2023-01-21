@@ -28,6 +28,8 @@ function Form() {
     usBmi: 0,
     metricBmi: 0,
     calculate: false,
+    maleChecked: false,
+    femaleChecked: false,
   });
   console.log("data :", data);
   const [error, setError] = useState({
@@ -228,7 +230,7 @@ function Form() {
               label="US Units"
               labelPlacement="top"
               onChange={(e) => setUnit(e.target.value)}
-              onClick={() =>
+              onClick={() => {
                 setError({
                   ageError: false,
                   cmError: false,
@@ -237,8 +239,22 @@ function Form() {
                   kgError: false,
                   lbsError: false,
                   genderError: false,
-                })
-              }
+                });
+                setData({
+                  age: "",
+                  cm: "",
+                  foot: "",
+                  inch: "",
+                  lbs: "",
+                  kg: "",
+                  male: false,
+                  female: false,
+                  usBmi: 0,
+                  metricBmi: 0,
+                  maleChecked: false,
+                  femaleChecked: false,
+                });
+              }}
             />
             <FormControlLabel
               value="Metric Units"
@@ -246,7 +262,7 @@ function Form() {
               label="Metric Units"
               labelPlacement="top"
               onChange={(e) => setUnit(e.target.value)}
-              onClick={() =>
+              onClick={() => {
                 setError({
                   ageError: false,
                   cmError: false,
@@ -255,8 +271,23 @@ function Form() {
                   kgError: false,
                   lbsError: false,
                   genderError: false,
-                })
-              }
+                });
+                setData({
+                  age: "",
+                  cm: "",
+                  foot: "",
+                  inch: "",
+                  lbs: "",
+                  kg: "",
+                  male: false,
+                  female: false,
+                  usBmi: 0,
+                  metricBmi: 0,
+                  calculate: false,
+                  maleChecked: false,
+                  femaleChecked: false,
+                });
+              }}
             />
           </RadioGroup>
         </FormControl>
@@ -270,9 +301,15 @@ function Form() {
               control={<Radio />}
               label="Male"
               labelPlacement="top"
+              checked={data.maleChecked}
               onChange={() =>
                 setData((prev) => {
                   return { ...prev, male: true, female: false };
+                })
+              }
+              onClick={() =>
+                setData((prev) => {
+                  return { ...prev, maleChecked: true, femaleChecked: false };
                 })
               }
             />
@@ -281,9 +318,15 @@ function Form() {
               control={<Radio />}
               label="Female"
               labelPlacement="top"
+              checked={data.femaleChecked}
               onChange={() =>
                 setData((prev) => {
                   return { ...prev, male: false, female: true };
+                })
+              }
+              onClick={() =>
+                setData((prev) => {
+                  return { ...prev, femaleChecked: true, maleChecked: false };
                 })
               }
             />
@@ -512,7 +555,6 @@ function Form() {
             size="large"
             onClick={(e) => {
               handleSubmit(e);
-
               if (
                 unit === "US Units" &&
                 data.age &&
@@ -525,7 +567,6 @@ function Form() {
                   return { ...prev, calculate: true };
                 });
               }
-
               if (
                 unit === "Metric Units" &&
                 data.age &&
@@ -539,23 +580,25 @@ function Form() {
               }
             }}
           >
-            {/* (e) => {
-              handleSubmit(e)
-              setData((prev) => {
-                return {...prev, calculate: true}
-              })
-            }
-           */}
             Calculate
           </Button>
         </FormControl>
       </div>
       {/* results */}
-      <div>
+      <div className="flex ">
         {data.calculate && (
-          <h1>{`You are ${
-            data.male ? "Male" : data.female ? "Female" : ""
-          }`}</h1>
+          <>
+            <h1>{`You are ${
+              data.male ? "Male." : data.female ? "Female." : ""
+            }`}</h1>
+            <p>{`You're BMI is ${
+              unit === "US Units"
+                ? data.usBmi
+                : unit === "Metric Units"
+                ? data.metricBmi
+                : ""
+            }  `}</p>
+          </>
         )}
       </div>
     </div>
