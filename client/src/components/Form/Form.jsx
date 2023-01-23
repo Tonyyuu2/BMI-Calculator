@@ -612,25 +612,25 @@ function Form() {
             <p className="text-center">
               {unit === "US Units" && data.usBmi < 18.5
                 ? "Good news! You are underweight! You have a lot of room to grow so get eatin'!"
-                : data.usBmi < 25
-                ? "Awesome! You're within healthy weight. Keep it up!"
+                : data.usBmi === 0
+                ? ""
                 : data.usBmi < 29
                 ? "Unfortunately, you are considered overweight. Time to hit the gym!"
                 : data.usBmi > 30
                 ? "This isn't easy, but you're considered obese. Time to rethink the lifestyle."
-                : data.usBmi === 0
-                ? ""
+                : data.usBmi < 25
+                ? "Awesome! You're within healthy weight. Keep it up!"
                 : ""}
               {unit === "Metric Units" && data.metricBmi < 18.5
                 ? "Good news! You are underweight! You have a lot of room to grow so get eatin'!"
+                : data.metricBmi === 0
+                ? ""
                 : data.metricBmi < 25
                 ? "Awesome! You're within healthy weight. Keep it up!"
                 : data.metricBmi < 29
                 ? "Unfortunately, you are considered overweight. Time to hit the gym!"
                 : data.metricBmi > 30
                 ? "This isn't easy, but you're considered obese. Time to rethink the lifestyle."
-                : data.metricBmi === 0
-                ? ""
                 : ""}
             </p>
           </>
