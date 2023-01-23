@@ -31,7 +31,7 @@ function Form() {
     maleChecked: false,
     femaleChecked: false,
   });
-  console.log("data :", data);
+
   const [error, setError] = useState({
     ageError: false,
     cmError: false,
