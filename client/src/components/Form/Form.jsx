@@ -465,7 +465,7 @@ function Form() {
                   ? "How's the weather up there?😳"
                   : data.foot + data.inch >= 52
                   ? "Pssh... I can take you 🤺"
-                  : null}
+                  : data.foot + data.inch >= 52}
               </FormHelperText>
             </div>
           )}
